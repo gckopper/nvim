@@ -1,9 +1,12 @@
+require("mason").setup()
+require("mason-lspconfig").setup()
+print("okayge")
+require("lspconfig").rust_analyzer.setup {}
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
 lsp.ensure_installed({
   'tsserver',
   'eslint',
-  'sumneko_lua',
   'rust_analyzer',
 })
 local cmp = require('cmp')
@@ -48,4 +51,7 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
   vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 end)
+
 lsp.setup()
+
+
