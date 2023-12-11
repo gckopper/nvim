@@ -12,10 +12,16 @@ lspconfig['lua_ls'].setup({
     single_file_support = true,
     capabilities = lsp_defaults.capabilities,
 })
+lspconfig['pyright'].setup({
+    capabilities = lsp_defaults.capabilities,
+})
 lspconfig['gopls'].setup({
     capabilities = lsp_defaults.capabilities,
 })
 lspconfig['clangd'].setup({
+    capabilities = lsp_defaults.capabilities,
+})
+lspconfig['rust_analyzer'].setup({
     capabilities = lsp_defaults.capabilities,
 })
 
@@ -46,8 +52,6 @@ cmp.setup({
   mapping = {
     ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
     ['<Down>'] = cmp.mapping.select_next_item(select_opts),
-
-    ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
     ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
 
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
@@ -94,3 +98,5 @@ cmp.setup({
     end, {'i', 's'}),
   },
 })
+
+
