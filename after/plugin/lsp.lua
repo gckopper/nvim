@@ -15,6 +15,12 @@ lspconfig['lua_ls'].setup({
 lspconfig['pyright'].setup({
     capabilities = lsp_defaults.capabilities,
 })
+lspconfig['cssls'].setup({
+    capabilities = lsp_defaults.capabilities,
+})
+lspconfig['html'].setup({
+    capabilities = lsp_defaults.capabilities,
+})
 lspconfig['gopls'].setup({
     capabilities = lsp_defaults.capabilities,
 })
@@ -22,6 +28,10 @@ lspconfig['clangd'].setup({
     capabilities = lsp_defaults.capabilities,
 })
 lspconfig['rust_analyzer'].setup({
+    capabilities = lsp_defaults.capabilities,
+})
+
+lspconfig['texlab'].setup({
     capabilities = lsp_defaults.capabilities,
 })
 
