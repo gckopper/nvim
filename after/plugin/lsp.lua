@@ -54,8 +54,8 @@ lspconfig['texlab'].setup({
                 modifyLineBreaks = false
             },
             forwardSearch = {
-                executable = "okular",
-                args = {"--unique","file:%p#src:%l%f"},
+                executable = "zathura",
+                args = {"--synctex-forward", "%l:1:%f", "%p"},
             }
         }
     }
