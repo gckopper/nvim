@@ -12,7 +12,7 @@ lspconfig['lua_ls'].setup({
     single_file_support = true,
     capabilities = lsp_defaults.capabilities,
 })
-lspconfig['pyright'].setup({
+lspconfig['jedi_language_server'].setup({
     capabilities = lsp_defaults.capabilities,
 })
 lspconfig['cssls'].setup({
@@ -29,6 +29,22 @@ lspconfig['clangd'].setup({
 })
 lspconfig['rust_analyzer'].setup({
     capabilities = lsp_defaults.capabilities,
+})
+lspconfig['ruby_lsp'].setup({
+    capabilities = lsp_defaults.capabilities,
+})
+lspconfig['hls'].setup({
+  filetypes = { 'haskell', 'lhaskell', 'cabal' },
+})
+lspconfig['ltex'].setup({
+  settings = {
+		ltex = {
+			language = "pt-BR",
+			--language = "en-US",
+            enabled = { "bibtex", "markdown", "tex", "restructuredtext","latex", "html", "xhtml", "yaml", "toml" }
+		},
+	},
+   filetypes = { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd", "context", "html", "xhtml", "mail", "toml", "yaml" }
 })
 
 lspconfig['texlab'].setup({
