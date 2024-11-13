@@ -40,7 +40,7 @@ lspconfig['ltex'].setup({
   settings = {
 		ltex = {
 			language = "pt-BR",
-			--language = "en-US",
+		--	language = "en-US",
             enabled = { "bibtex", "markdown", "tex", "restructuredtext","latex", "html", "xhtml", "yaml", "toml" }
 		},
 	},
