@@ -9,8 +9,37 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
 )
 
 lspconfig['lua_ls'].setup({
-    single_file_support = true,
-    capabilities = lsp_defaults.capabilities,
+    on_init = function(client)
+        if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+                return
+            end
+        end
+
+        client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+                -- Tell the language server which version of Lua you're using
+                -- (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT'
+            },
+            -- Make the server aware of Neovim runtime files
+            workspace = {
+                checkThirdParty = false,
+                library = {
+                    vim.env.VIMRUNTIME
+                    -- Depending on the usage, you might want to add additional paths here.
+                    -- "${3rd}/luv/library"
+                    -- "${3rd}/busted/library",
+                }
+                -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+                -- library = vim.api.nvim_get_runtime_file("", true)
+            }
+        })
+    end,
+    settings = {
+        Lua = {}
+    }
 })
 lspconfig['jedi_language_server'].setup({
     capabilities = lsp_defaults.capabilities,
@@ -34,18 +63,19 @@ lspconfig['ruby_lsp'].setup({
     capabilities = lsp_defaults.capabilities,
 })
 lspconfig['hls'].setup({
-  filetypes = { 'haskell', 'lhaskell', 'cabal' },
+    filetypes = { 'haskell', 'lhaskell', 'cabal' },
 })
-lspconfig['ltex'].setup({
-  settings = {
-		ltex = {
-			language = "pt-BR",
-		--	language = "en-US",
-            enabled = { "bibtex", "markdown", "tex", "restructuredtext","latex", "html", "xhtml", "yaml", "toml" }
-		},
-	},
-   filetypes = { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd", "context", "html", "xhtml", "mail", "toml", "yaml" }
-})
+vim.api.nvim_create_user_command("Ltex", function(opts)
+    lspconfig['ltex'].setup({
+        settings = {
+            ltex = {
+                language = opts.args,
+                enabled = { "bibtex", "markdown", "tex", "restructuredtext", "latex", "html", "xhtml", "yaml", "toml" }
+            },
+        },
+        filetypes = { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd", "context", "html", "xhtml", "mail", "toml", "yaml" }
+    })
+end, { desc = "Start ltex for a given language", nargs = 1 })
 
 lspconfig['texlab'].setup({
     capabilities = lsp_defaults.capabilities,
@@ -71,7 +101,7 @@ lspconfig['texlab'].setup({
             },
             forwardSearch = {
                 executable = "zathura",
-                args = {"--synctex-forward", "%l:1:%f", "%p"},
+                args = { "--synctex-forward", "%l:1:%f", "%p" },
             }
         }
     }
