@@ -129,7 +129,7 @@ cmp.setup({
         { name = 'luasnip',  keyword_length = 2 },
     },
     window = {
-        documentation = cmp.config.window.bordered()
+        --completion = cmp.config.window.bordered()
     },
     mapping = {
         ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
