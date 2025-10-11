@@ -1,9 +1,10 @@
 require("lazy").setup({
     "neovim/nvim-lspconfig",
     'hrsh7th/nvim-cmp',     -- Required
+    'hrsh7th/cmp-nvim-lsp', -- Required
+    'hrsh7th/cmp-path',
     {'L3MON4D3/LuaSnip'},
     'mfussenegger/nvim-jdtls',
-    'hrsh7th/cmp-nvim-lsp', -- Required
     -- the colorscheme should be available when starting Neovim
     {
         "folke/tokyonight.nvim",
