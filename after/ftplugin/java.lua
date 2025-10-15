@@ -110,6 +110,10 @@ vim.keymap.set("n", "<leader>vi", function ()
     require 'jdtls'.organize_imports()
 end)
 
-vim.keymap.set("n", "<leader>vcr", function ()
+vim.keymap.set("n", "<leader>vrc", function ()
     require'jdtls'.test_class()
+end)
+
+vim.keymap.set("n", "<leader>vrt", function ()
+    require'jdtls'.test_nearest_method()
 end)
