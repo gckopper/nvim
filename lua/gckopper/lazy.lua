@@ -5,6 +5,7 @@ require("lazy").setup({
     'hrsh7th/cmp-path',
     {'L3MON4D3/LuaSnip'},
     'mfussenegger/nvim-jdtls',
+    'mfussenegger/nvim-dap',
     -- the colorscheme should be available when starting Neovim
     {
         "folke/tokyonight.nvim",
