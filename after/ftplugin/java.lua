@@ -12,7 +12,7 @@ local config = {
 
     -- 💀
     -- the nvim plugin needs at least java 21
-    os.getenv("HOME") .. '/.asdf/installs/java/openjdk-24.0.1/bin/java', -- or '/path/to/java17_or_newer/bin/java'
+    os.getenv("JAVA_HOME") .. '/bin/java', -- or '/path/to/java17_or_newer/bin/java'
             -- depends on if `java` is in your $PATH env variable and if it points to the right version.
 
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
@@ -20,6 +20,7 @@ local config = {
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
     '-Dlog.protocol=true',
     '-Dlog.level=ALL',
+    '-javaagent:' .. jdtls_install_dir .. '/lombok.jar',
     '-Xmx1g',
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
