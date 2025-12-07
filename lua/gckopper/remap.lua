@@ -35,23 +35,40 @@ vim.keymap.set("n", "<leader>%", ":vnew<CR>")
 -- new tab with c (tmux like)
 vim.keymap.set("n", "<leader>c", ":tabnew<CR>")
 -- navigate between splits with alt hjkl
-vim.keymap.set({"n", "i", "t"}, "<A-j>", "<C-\\><C-n><C-w><Down>")
-vim.keymap.set({"n", "i", "t"}, "<A-k>", "<C-\\><C-n><C-w><Up>")
-vim.keymap.set({"n", "i", "t"}, "<A-h>", "<C-\\><C-n><C-w><Left>")
-vim.keymap.set({"n", "i", "t"}, "<A-l>", "<C-\\><C-n><C-w><Right>")
+vim.keymap.set({"n", "i", "t"}, "<M-j>", "<C-\\><C-n><C-w><Down>")
+vim.keymap.set({"n", "i", "t"}, "<M-k>", "<C-\\><C-n><C-w><Up>")
+vim.keymap.set({"n", "i", "t"}, "<M-h>", "<C-\\><C-n><C-w><Left>")
+vim.keymap.set({"n", "i", "t"}, "<M-l>", "<C-\\><C-n><C-w><Right>")
 -- go to terminal mode with t
 vim.keymap.set("n", "<leader>t", ":terminal<CR>")
 
 -- set current tab with alt n
-vim.keymap.set({"n", "i", "t"}, "<A-1>", "<C-\\><C-n>:tabn 1<CR>")
-vim.keymap.set({"n", "i", "t"}, "<A-2>", "<C-\\><C-n>:tabn 2<CR>")
-vim.keymap.set({"n", "i", "t"}, "<A-3>", "<C-\\><C-n>:tabn 3<CR>")
-vim.keymap.set({"n", "i", "t"}, "<A-4>", "<C-\\><C-n>:tabn 4<CR>")
-vim.keymap.set({"n", "i", "t"}, "<A-5>", "<C-\\><C-n>:tabn 5<CR>")
-vim.keymap.set({"n", "i", "t"}, "<A-6>", "<C-\\><C-n>:tabn 6<CR>")
-vim.keymap.set({"n", "i", "t"}, "<A-7>", "<C-\\><C-n>:tabn 7<CR>")
-vim.keymap.set({"n", "i", "t"}, "<A-8>", "<C-\\><C-n>:tabn 8<CR>")
-vim.keymap.set({"n", "i", "t"}, "<A-9>", "<C-\\><C-n>:tabn 9<CR>")
+for i = 1, 9 do
+    local key_combo = string.format("<M-%d>", i)
+    vim.keymap.set({"n", "i", "t"}, key_combo, function ()
+        local tabs = vim.api.nvim_list_tabpages()
+        if #tabs >= i then
+            vim.api.nvim_set_current_tabpage(tabs[i])
+        end
+    end)
+end
+
+vim.api.nvim_create_autocmd({'WinEnter'}, {
+    callback = function (_)
+        if vim.api.nvim_get_mode()['mode'] == 'nt' then
+            vim.cmd('startinsert')
+        end
+    end
+})
+
+-- move tabs
+for i = 1, 9 do
+    local key_combo = string.format("<M-S-%d>", i)
+    vim.keymap.set({"n", "i", "t"}, key_combo, function ()
+        local is_before = vim.api.nvim_tabpage_get_number(0) > i and 1 or 0
+        vim.cmd(string.format("tabm %d", i - is_before))
+    end)
+end
 
 -- leave terminal mode with jk too
 vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")
