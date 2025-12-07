@@ -1,6 +1,6 @@
 return function (vim)
     vim.api.nvim_create_user_command("Ltex", function(opts)
-        vim.lsp.config('ltex', {
+        vim.lsp.config('ltex_plus', {
             settings = {
                 ltex = {
                     language = opts.args,
@@ -9,6 +9,6 @@ return function (vim)
             },
             filetypes = { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd", "context", "html", "xhtml", "mail", "toml", "yaml", "javascript", "javascriptreact", "typescript", "typescriptreact" }
         })
-        vim.lsp.enable('ltex')
+        vim.lsp.enable('ltex_plus')
     end, { desc = "Start ltex for a given language", nargs = 1 })
 end
