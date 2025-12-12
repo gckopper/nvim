@@ -53,11 +53,9 @@ for i = 1, 9 do
     end)
 end
 
-vim.api.nvim_create_autocmd({'WinEnter'}, {
+vim.api.nvim_create_autocmd({'CmdwinEnter'}, {
     callback = function (_)
-        if vim.api.nvim_get_mode()['mode'] == 'nt' then
             vim.cmd('startinsert')
-        end
     end
 })
 
