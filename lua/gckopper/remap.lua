@@ -53,11 +53,14 @@ for i = 1, 9 do
     end)
 end
 
-vim.api.nvim_create_autocmd({'CmdwinEnter'}, {
+vim.api.nvim_create_autocmd({'BufEnter'}, {
     callback = function (_)
+        if vim.bo.buftype == 'terminal' then
             vim.cmd('startinsert')
+        end
     end
 })
+
 
 -- move tabs
 for i = 1, 9 do
@@ -68,11 +71,26 @@ for i = 1, 9 do
     end)
 end
 
+local function resize(width, height)
+    return function ()
+        local win_width = vim.api.nvim_win_get_width(0)
+        vim.api.nvim_win_set_width(0, win_width + 1 * width)
+        local win_height = vim.api.nvim_win_get_height(0)
+        vim.api.nvim_win_set_height(0, win_height + 1 * height)
+    end
+end
+
+-- resize windows
+vim.keymap.set({"n", "t", "v"}, "<M-S-k>", resize(0, -1))
+vim.keymap.set({"n", "t", "v"}, "<M-S-j>", resize(0, 1))
+vim.keymap.set({"n", "t", "v"}, "<M-S-h>", resize(1, 0))
+vim.keymap.set({"n", "t", "v"}, "<M-S-l>", resize(-1, 0))
+
 -- leave terminal mode with jk too
 vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")
 
 -- Move lines up and down
-vim.keymap.set("n", "<A-Up>", ":m-2<CR>")
-vim.keymap.set("n", "<A-Down>", ":m+<CR>")
-vim.keymap.set("v", "<A-Up>", ":m-2<CR>gv=gv")
-vim.keymap.set("v", "<A-Down>", ":m'>+<CR>gv=gv")
+vim.keymap.set("n", "<M-up>", ":m-2<cr>")
+vim.keymap.set("n", "<M-down>", ":m+<cr>")
+vim.keymap.set("v", "<M-Up>", ":m-2<CR>gv=gv")
+vim.keymap.set("v", "<M-Down>", ":m'>+<CR>gv=gv")
