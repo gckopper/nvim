@@ -1,3 +1,4 @@
+-- find information about lsps with :help lspconfig-all
 -- installed with bun install -g typescript typescript-language-server
 require('gckopper.lsp.ts_ls')(vim)
 -- installed with
@@ -23,3 +24,5 @@ require('gckopper.lsp.rust_analyzer')(vim)
 require('gckopper.lsp.python')(vim)
 -- installed with 
 require('gckopper.lsp.lua_ls')(vim)
+-- installed with bun install -g @astrojs/language-server
+require('gckopper.lsp.astro')(vim)
