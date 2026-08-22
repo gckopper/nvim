@@ -26,3 +26,7 @@ require('gckopper.lsp.python')(vim)
 require('gckopper.lsp.lua_ls')(vim)
 -- installed with bun install -g @astrojs/language-server
 require('gckopper.lsp.astro')(vim)
+-- installed with bun install -g @mdx-js/language-server
+require('gckopper.lsp.mdx')(vim)
+-- installed with https://github.com/nolanderc/glsl_analyzer/releases
+require('gckopper.lsp.glsl')(vim)
