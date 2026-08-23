@@ -37,12 +37,18 @@ vim.keymap.set("n", "<M-down>", ":m+<cr>")
 vim.keymap.set("v", "<M-Up>", ":m-2<CR>gv=gv")
 vim.keymap.set("v", "<M-Down>", ":m'>+<CR>gv=gv")
 
--- horizontal split with alt+w
-vim.keymap.set("n", "<M-w>", ":new<CR>")
-vim.keymap.set({"t", "i"}, "<M-w>", "<C-\\><C-n>:new<CR>")
--- vertical split with alt+d
-vim.keymap.set("n", "<M-d>", ":vnew<CR>")
-vim.keymap.set({"t", "i"}, "<M-d>", "<C-\\><C-n>:vnew<CR>")
+local function split(direction)
+    return function()
+        local buf = vim.api.nvim_create_buf(false, false)
+        vim.api.nvim_open_win(buf, true, {split = direction})
+    end
+end
+-- splits with alt+wasd
+vim.keymap.set({"t", "i", "n"}, "<M-w>", split("above"))
+vim.keymap.set({"t", "i", "n"}, "<M-a>", split("left"))
+vim.keymap.set({"t", "i", "n"}, "<M-s>", split("below"))
+vim.keymap.set({"t", "i", "n"}, "<M-d>", split("right"))
+
 -- vertical split with alt+c
 vim.keymap.set("n", "<M-c>", ":tabnew<CR>")
 vim.keymap.set({"t", "i"}, "<M-c>", "<C-\\><C-n>:tabnew<CR>")
@@ -54,7 +60,10 @@ vim.keymap.set({"n", "i", "t"}, "<M-h>", "<C-\\><C-n><C-w><Left>")
 vim.keymap.set({"n", "i", "t"}, "<M-l>", "<C-\\><C-n><C-w><Right>")
 
 -- go to terminal mode with t
-vim.keymap.set("n", "<leader>t", ":terminal<CR>")
+vim.keymap.set("n", "<leader>t", function()
+    vim.cmd('terminal')
+    vim.cmd('startinsert')
+end)
 
 -- set current tab with alt n
 for i = 1, 9 do
@@ -74,7 +83,6 @@ vim.api.nvim_create_autocmd({'BufEnter'}, {
         end
     end
 })
-
 
 -- move tabs
 for i = 1, 9 do
