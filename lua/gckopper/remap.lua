@@ -84,6 +84,12 @@ vim.api.nvim_create_autocmd({'BufEnter'}, {
     end
 })
 
+vim.api.nvim_create_autocmd({'VimResized'}, {
+    callback = function (_)
+        vim.cmd('wincmd =')
+    end
+})
+
 -- move tabs
 for i = 1, 9 do
     local key_combo = string.format("<M-S-%d>", i)
