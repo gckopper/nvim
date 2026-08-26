@@ -49,9 +49,10 @@ vim.keymap.set({"t", "i", "n"}, "<M-a>", split("left"))
 vim.keymap.set({"t", "i", "n"}, "<M-s>", split("below"))
 vim.keymap.set({"t", "i", "n"}, "<M-d>", split("right"))
 
--- vertical split with alt+c
-vim.keymap.set("n", "<M-c>", ":tabnew<CR>")
-vim.keymap.set({"t", "i"}, "<M-c>", "<C-\\><C-n>:tabnew<CR>")
+-- new tabs with alt+c
+vim.keymap.set({"t", "i", "n"}, "<M-c>", function()
+    vim.cmd('tabnew')
+end)
 
 -- navigate between splits with alt hjkl
 vim.keymap.set({"n", "i", "t"}, "<M-j>", "<C-\\><C-n><C-w><Down>")
