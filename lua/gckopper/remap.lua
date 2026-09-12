@@ -85,13 +85,14 @@ vim.api.nvim_create_autocmd({'TermOpen'}, {
 
 vim.api.nvim_create_autocmd({'QuitPre'}, {
     callback = function (event)
-        if pcall(vim.api.nvim_win_get_var, 0, 'terminal') then
-            local term = vim.api.nvim_win_get_var(0, 'terminal')
-            local term_win = vim.api.nvim_open_win(term, true, { split = 'left', win = 0 })
-            vim.api.nvim_win_call(term_win, function ()
-                vim.cmd('startinsert')
-            end)
+        local ok, term = pcall(vim.api.nvim_win_get_var, 0, 'terminal')
+        if not ok then
+            return
         end
+        local term_win = vim.api.nvim_open_win(term, true, { split = 'left', win = 0 })
+        vim.api.nvim_win_call(term_win, function ()
+            vim.cmd('startinsert')
+        end)
     end,
 })
 
