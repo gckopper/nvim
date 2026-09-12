@@ -5,8 +5,8 @@ vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({"n", "v"}, "<leader>y", '"+y')
+vim.keymap.set("n", "<leader>y", '"+Y')
 
 vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
@@ -76,6 +76,24 @@ for i = 1, 9 do
         end
     end)
 end
+
+vim.api.nvim_create_autocmd({'TermOpen'}, {
+    callback = function (event)
+        vim.api.nvim_win_set_var(vim.api.nvim_get_current_win(), 'terminal', vim.api.nvim_get_current_buf())
+    end,
+})
+
+vim.api.nvim_create_autocmd({'QuitPre'}, {
+    callback = function (event)
+        if pcall(vim.api.nvim_win_get_var, 0, 'terminal') then
+            local term = vim.api.nvim_win_get_var(0, 'terminal')
+            local term_win = vim.api.nvim_open_win(term, true, { split = 'left', win = 0 })
+            vim.api.nvim_win_call(term_win, function ()
+                vim.cmd('startinsert')
+            end)
+        end
+    end,
+})
 
 vim.api.nvim_create_autocmd({'BufEnter'}, {
     callback = function (_)
