@@ -90,6 +90,7 @@ vim.api.nvim_create_autocmd({'QuitPre'}, {
             return
         end
         local term_win = vim.api.nvim_open_win(term, true, { split = 'left', win = 0 })
+        vim.api.nvim_win_set_var(term_win, 'terminal', vim.api.nvim_get_current_buf())
         vim.api.nvim_win_call(term_win, function ()
             vim.cmd('startinsert')
         end)
