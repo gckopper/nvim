@@ -1,3 +1,5 @@
+vim.g.clipboard = 'osc52'
+
 vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.expandtab = true
